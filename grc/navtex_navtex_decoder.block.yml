@@ -1,0 +1,61 @@
+id: navtex_navtex_decoder
+label: NAVTEX decoder
+category: '[navtex]'
+flags: '[ python, cpp ]'
+
+parameters:
+-   id: type
+    label: Input Type
+    dtype: enum
+    options: [float, short]
+    option_attributes:
+        fcn: [f, s]
+    hide: part
+-   id: samp_rate
+    label: Sample Rate
+    dtype: int
+    default: samp_rate
+    options: ['11025', '16000', '22050', '24000', '32000', '44100', '48000']
+    option_labels: [11.025 kHz, 16 kHz, 22.05 kHz, 24 kHz, 32 kHz, 44.1 kHz, 48 kHz]
+-   id: filename
+    label: Filename
+    dtype: string
+    hide: ${ ('none' if filename else 'part') }
+-   id: reverse
+    label: Reverse
+    dtype: enum
+    default: 'False'
+    options: ['True', 'False']
+    option_labels: ['Yes', 'No']
+    hide: part
+
+inputs:
+-   domain: stream
+    dtype: ${ type }
+
+templates:
+  imports: from gnuradio import navtex
+  make: navtex.navtex_decoder_${type.fcn}(${samp_rate}, ${filename}, ${reverse})
+
+cpp_templates:
+    includes: [ '#include <gnuradio/navtex/navtex_decoder.h>' ]
+    declarations: 'navtex::navtex_decoder_${type.fcn}::sptr ${id};'
+    make: 'this->${id} = navtex::navtex_decoder_${type.fcn}::make(${samp_rate}, ${filename}, ${reverse});'
+    translations:
+        "'": '"'
+        'True': 'true'
+        'False': 'false'
+
+documentation: |-
+    The NAXTEX Decoder Sink Block:
+
+    Sample rate:
+
+    File name:
+    Name of the output file (leave empty for stdout)
+
+    Reverse:
+    Reverses mark and space (to be used when decoding on LSB instead of USB)
+
+
+file_format: 1
