@@ -1,6 +1,6 @@
 # gr-navtex: GNU Radio OOT module for NAVTEX
 
-This OOT GNU Radio module supports the decoding of NAVTEX traffic (https://en.wikipedia.org/wiki/NAVTEX)
+This OOT GNU Radio module supports decoding NAVTEX traffic (https://en.wikipedia.org/wiki/NAVTEX)
 
 ## Dependencies
 
