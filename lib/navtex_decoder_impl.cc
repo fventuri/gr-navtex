@@ -47,7 +47,8 @@ navtex_decoder_impl<T>::~navtex_decoder_impl()
 {
     delete nv;
     nv = nullptr;
-    fclose(rawfile);
+    if (rawfile != stdout)
+        fclose(rawfile);
     if (rawfile == stdout)
         setvbuf(rawfile, nullptr, _IOLBF, 0);
     rawfile = nullptr;
